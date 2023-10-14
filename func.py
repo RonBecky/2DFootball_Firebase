@@ -195,12 +195,12 @@ class actions():
     
     
     def check_game_over(self, game_instance):
-        if game_instance.score.score_home == 1 or game_instance.score.score_away == 1:
+        if game_instance.score.score_home == 5 or game_instance.score.score_away == 5:
             final_score = f"{game_instance.score.score_home}-{game_instance.score.score_away}"  # Get the score before last goal
-            if game_instance.score.score_home == 1:
+            if game_instance.score.score_home == 5:
                 winner = "Home Won!"
                 game_instance.score.increase_home()  # Manually update the score
-            elif game_instance.score.score_away == 1:
+            elif game_instance.score.score_away == 5:
                 winner = "Away Won!"
                 game_instance.score.increase_away()  # Manually update the score
     
