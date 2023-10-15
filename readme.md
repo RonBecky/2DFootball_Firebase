@@ -20,6 +20,9 @@
 - **RIGHT_ARROW**: Move right
 - **NUMPAD_0**: Shoot
 
+#### Goalkeepers:
+- Scripted movment.
+
 ## Installation
 
 ### Requirements
