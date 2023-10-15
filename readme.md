@@ -29,8 +29,8 @@
 
 ### Running the Game
 
-1. Clone the repository.
-2. create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
+1. create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
+2. Clone the repository.
 3. Install the requirements using `pip install -r .\requirements.txt`.
 4. Run the script `py ./main.py`.
 
