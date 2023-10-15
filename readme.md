@@ -61,7 +61,7 @@
 - `Static folder`: Holds the sound effects files.
 
 ## Game picture
-![2D_Football_img](https://github.com/ronxzone/2D_Football/blob/main/2D_Football_gh.jpg?raw=true)
+![2D_Football_img](https://github.com/ronxzone/2DFootball_Firebase/blob/4c9d65a3d842a98d1eab9bf45d13fdd53f1437c1/2D_Football_gh.jpg)
 
 ## Acknowledgments
 
