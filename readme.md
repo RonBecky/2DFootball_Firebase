@@ -28,7 +28,7 @@
 ### Requirements
 - Python 3.x
 - Pygame
-- firebase
+- Firebase
 
 ### Running the Game
 
