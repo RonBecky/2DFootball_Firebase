@@ -32,7 +32,7 @@
 
 ### Running the Game
 
-1. create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
+1. Create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
 2. Clone the repository.
 3. Go to 2DFootball_Firebase file using `cd ./2DFootball_Firebase` and install the requirements using `pip install -r .\requirements.txt`.
 4. Run the script `py ./main.py`.
