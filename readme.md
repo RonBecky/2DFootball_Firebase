@@ -25,12 +25,14 @@
 ### Requirements
 - Python 3.x
 - Pygame
+- firebase
 
 ### Running the Game
 
 1. Clone the repository.
-2. Install the requirements using `pip install -r .\requirements.txt`.
-3. Run the script `py ./main.py`.
+2. create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
+3. Install the requirements using `pip install -r .\requirements.txt`.
+4. Run the script `py ./main.py`.
 
 ## Gameplay
 
@@ -38,6 +40,7 @@
 - Players can take control of the ball if they're close to it.
 - Players can shoot the ball in any direction.
 - Score a goal by getting the ball into the opponent's net.
+- First player to reach five goals wins the game.
 
 ## Classes and Components
 
@@ -54,6 +57,8 @@
 - `Menu`: Manages the menu loop.
 - `Screen`: Sets the screen for all the other components.
 - `VictoryScreen`: Manages the victory screen, shows who won and moves you back into the main menu.
+- `Sounds`: Manages the sound effects across the program.
+- `Static folder`: Holds the sound effects files.
 
 ## Game picture
 ![2D_Football_img](https://github.com/ronxzone/2D_Football/blob/main/2D_Football_gh.jpg?raw=true)

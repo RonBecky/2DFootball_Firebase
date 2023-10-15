@@ -1,6 +1,6 @@
 import pygame
 
-class Player:
+class Player:# Red player (left)
     def __init__(self, x, y, size):
         self.x = x
         self.y = y
@@ -11,9 +11,10 @@ class Player:
         self.ball_attached = False
         self.facing_direction = 'd'
 
-    def draw(self, window):
+    def draw(self, window):# Drawing the square
         pygame.draw.rect(window, self.color, (self.x, self.y, self.size, self.size))
-
+    
+    # Movement for player
     def move(self, keys, screen_width, screen_height, ball_attached=False, ball_size=0):
         if keys[pygame.K_w] and self.y - self.speed - (ball_attached * ball_size) >= 0:
             self.y -= self.speed
@@ -28,6 +29,7 @@ class Player:
             self.x += self.speed
             self.direction = 'right'
     
+    # Updating ball position when attached
     def update(self, keys, screen_width, screen_height, ball_attached, ball_radius):
         self.move(keys, screen_width, screen_height, ball_attached, ball_radius)
         if keys[pygame.K_w] and keys[pygame.K_a]:# Up left

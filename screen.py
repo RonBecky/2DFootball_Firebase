@@ -1,6 +1,6 @@
 import pygame
 
-class Screen:
+class Screen:# Setting the screen and window for all other components
     def __init__(self):
        # Constants for screen size
        self.WIDTH = 1000

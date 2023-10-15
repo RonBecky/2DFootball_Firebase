@@ -1,14 +1,13 @@
 import math
 import pygame
-from goalkeeper import Goalkeeper
 from pitch import Pitch
 from player import Player
 from opponent import Opponent
 from ball import Ball
 from score import Score
 from screen import Screen
-import gameLoop
 from victoryScreen import show_victory_screen
+from sounds import SoundManager
 
 
 
@@ -21,6 +20,7 @@ class actions():
         self.opponent = Opponent(self.screen.WIDTH - 223, 240, 20)
         self.ball = Ball(self.screen.WIDTH, self.screen.HEIGHT, 10)
         self.score = Score(self.screen.WIDTH, self.screen.HEIGHT)
+        self.sounds = SoundManager()
         
         
     def is_close_to_ball(self, player, ball):
@@ -54,7 +54,7 @@ class actions():
             ball.x = entity.x + entity.size + ball.radius
             ball.y = entity.y + entity.size + ball.radius
     
-    def check_and_attach_ball(self, player, opponent, ball):
+    def check_and_attach_ball(self, player, opponent, ball):# Responsible for attaching the ball to an entity
         if not player.ball_attached and not opponent.ball_attached:
             if self.is_close_to_ball(player, ball) and ball.shoot_delay == 0:
                 player.ball_attached = True
@@ -75,7 +75,7 @@ class actions():
         player.ball_attached = False  # Detaching the ball from the player
         opponent.ball_attached = False  # Detaching the ball from the opponent
     
-    def handle_ball_attachment(self, player, opponent, ball):
+    def handle_ball_attachment(self, player, opponent, ball):# Responsible for ball stealing
         if player.ball_attached:
             self.attach_ball_to_entity(player, ball, player.facing_direction)
             if self.is_close_to_ball(opponent, ball) and ball.shoot_delay == 0:
@@ -143,7 +143,7 @@ class actions():
             self.ball.shoot_delay = shoot_delay
             entity.ball_attached = False
     
-    def update_ball_position(self, game_instance):
+    def update_ball_position(self, game_instance):# Updating the ball position on the pitch every time
         self.ball = game_instance.ball
         self.screen = game_instance.screen
         
@@ -170,46 +170,49 @@ class actions():
                 self.ball.shoot_delay = 0
 
     
-    def manage_shoot_delay(self, game_instance):
+    def manage_shoot_delay(self, game_instance):# Shoot delay for the ball to be able to get shoot and not get stuck to entity
         self.ball = game_instance.ball
 
         # Decrease the shoot delay counter (if it's greater than 0)
         if self.ball.shoot_delay > 0:
             self.ball.shoot_delay -= 1
             
-    def check_goals_and_reset(self, game_instance):
+    def check_goals_and_reset(self, game_instance):# Checking if a goal was made
         ball = game_instance.ball
         pitch = game_instance.pitch
         score = game_instance.score
         screen = game_instance.screen
-
+        
+        # Cheking if the goal was scored on the left goal post
         if ball.x - ball.radius <= pitch.GOAL_WIDTH and pitch.screen_height / 2 - pitch.GOAL_HEIGHT / 2 < ball.y < pitch.screen_height / 2 + pitch.GOAL_HEIGHT / 2:
             score.increase_away()
             ball.goal_scored = True
             self.reset_positions(game_instance.player, game_instance.opponent, ball, screen)
         
+        # Cheking if the goal was scored on the right goal post
         if ball.x + ball.radius >= pitch.screen_width - pitch.GOAL_WIDTH and pitch.screen_height / 2 - pitch.GOAL_HEIGHT / 2 < ball.y < pitch.screen_height / 2 + pitch.GOAL_HEIGHT / 2:
             score.increase_home()
             ball.goal_scored = True
             self.reset_positions(game_instance.player, game_instance.opponent, ball, screen)
     
     
-    def check_game_over(self, game_instance):
-        if game_instance.score.score_home == 1 or game_instance.score.score_away == 1:
+    def check_game_over(self, game_instance):# Checking if a side scored 5 goals and ending the game
+        if game_instance.score.score_home == 5 or game_instance.score.score_away == 5:
             final_score = f"{game_instance.score.score_home}-{game_instance.score.score_away}"  # Get the score before last goal
-            if game_instance.score.score_home == 1:
+            if game_instance.score.score_home == 5:
                 winner = "Home Won!"
                 game_instance.score.increase_home()  # Manually update the score
-            elif game_instance.score.score_away == 1:
+            elif game_instance.score.score_away == 5:
                 winner = "Away Won!"
                 game_instance.score.increase_away()  # Manually update the score
     
             show_victory_screen(winner, final_score)  # Pass the final score
             game_instance.running = False
+            self.sounds.play_end_sound()
             return "GAME_OVER", winner, final_score
         
     
-    def handle_goalkeeper_collision(self, game_instance):
+    def handle_goalkeeper_collision(self, game_instance):# Making the ball to bounce when hitting the goalkeepers
         goalkeeper1 = game_instance.goalkeeper1
         goalkeeper2 = game_instance.goalkeeper2
         ball = game_instance.ball

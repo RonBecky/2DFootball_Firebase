@@ -18,14 +18,14 @@ class Goalkeeper:
     
     
 
-    def move(self, goal_area_top, goal_area_bottom, pause_frames=30):
+    def move(self, goal_area_top, goal_area_bottom, pause_frames=30):# Setting the movement of the goalkeeper, ai or scripted (no ai right now)
         if self.control == 'scripted':
             self._move_scripted(goal_area_top, goal_area_bottom, pause_frames)
         elif self.control == 'ai':
             self._move_ai(goal_area_top, goal_area_bottom)
         # possibly add more control types here
 
-    def _move_scripted(self, goal_area_top, goal_area_bottom, pause_frames):
+    def _move_scripted(self, goal_area_top, goal_area_bottom, pause_frames):# Scripted movement
         if self.pause_time > 0:
             self.pause_time -= 1
             return
@@ -49,7 +49,7 @@ class Goalkeeper:
         elif self.y == (goal_area_top + goal_area_bottom) / 2:
             self.pause_time = pause_frames
 
-    def _move_ai(self, goal_area_top, goal_area_bottom):
+    def _move_ai(self, goal_area_top, goal_area_bottom):# Ai :-:
         # AI logic here
         pass
     

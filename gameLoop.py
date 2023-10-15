@@ -5,9 +5,7 @@ from player import Player
 from opponent import Opponent
 from ball import Ball
 from score import Score
-from screen import Screen
 from func import actions
-from victoryScreen import show_victory_screen
 
 
 
@@ -91,11 +89,6 @@ class GameLoop:
             pygame.display.flip()
             
             game_over_info = self.Func.check_game_over(self)
-        #     if game_over_info:  # If a tuple is returned, then game_over_info will be non-None.
-        #         action, winner, final_score = game_over_info  # Unpack the returned tuple
-        #     #     # if action == "GAME_OVER":
-        #     #     #     show_victory_screen(winner, final_score)  # Show victory screen here, assuming it exits immediately after showing
-        #     #     # self.running = False  # This line will stop the main game loop
             
         return game_over_info
         

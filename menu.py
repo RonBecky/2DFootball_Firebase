@@ -3,7 +3,7 @@ import pygame
 from pitch import Pitch
 import database
 
-class Menu:
+class Menu:# The loop for the start menu
     def __init__(self, screen, clock):
         self.menu_running = True
         self.return_to_menu = False
@@ -17,13 +17,13 @@ class Menu:
         self.champions_button_rect = pygame.Rect(400, 300, 200, 50)
         self.pitch = Pitch(self.screen.WIDTH, self.screen.HEIGHT)
 
-    def draw_button(self, text, rect, color):
+    def draw_button(self, text, rect, color):# Drawing the two buttons of "Play" & "Champions"
         pygame.draw.rect(self.screen.window, color, rect)
         button_text = self.button_font.render(text, True, (0, 0, 0))
         button_rect = button_text.get_rect(center=rect.center)
         self.screen.window.blit(button_text, button_rect)
 
-    def run(self):
+    def run(self):# Running the menu loop
         while self.menu_running:
             self.clock.tick(60)
             for event in pygame.event.get():
@@ -32,17 +32,17 @@ class Menu:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = event.pos
-                    if self.play_button_rect.collidepoint(x, y):
-                        print("Play button clicked!")
+                    if self.play_button_rect.collidepoint(x, y):# Stop running menu loop and move into 'play' state (game loop)
+                        # print("Play button clicked!")
                         self.menu_running = False
                         return 'play'
-                    elif self.champions_button_rect.collidepoint(x, y):
-                        print("Champions button clicked!")
+                    elif self.champions_button_rect.collidepoint(x, y):# Showing the leaderboard and getting the data from firebase, moving into the 'champions' state
+                        # print("Champions button clicked!")
                         scores = database.fetch_scores()
-                        print(scores)
+                        # print(scores)
                         return 'champions'
             
-
+            # Drawing everything on screen
             self.pitch_surface = pygame.Surface((self.screen.WIDTH, self.screen.HEIGHT))
             self.pitch.draw(self.pitch_surface)
             self.screen.window.blit(self.pitch_surface, (0, 0))
@@ -54,11 +54,10 @@ class Menu:
             
             pygame.display.flip()
         
-    def draw_leaderboard(self, scores):
+    def draw_leaderboard(self, scores):# creating the leaderboard
         leaderboard_background = pygame.Surface((self.screen.WIDTH, self.screen.HEIGHT), pygame.SRCALPHA)
         leaderboard_background.fill((0, 0, 0, 128))
         self.screen.window.blit(leaderboard_background, (0, 0))
-        
         title_font = pygame.font.Font(None, 74)
         title_text = title_font.render('Leaderboard', True, (255, 255, 255))
         title_rect = title_text.get_rect(center=(self.screen.WIDTH // 2, 30))
@@ -73,11 +72,11 @@ class Menu:
         
         
         if scores is None or len(scores) == 0:  # Check if scores is None or empty
-           none_text = score_font.render("None", True, (255, 255, 255))
+           none_text = score_font.render("No games registered", True, (255, 255, 255))
            none_rect = none_text.get_rect(center=(self.screen.WIDTH // 2, start_y))
            self.screen.window.blit(none_text, none_rect)
         else:
-            for idx, (key, score) in enumerate(scores.items()):
+            for idx, (key, score) in enumerate(scores.items()):# If there are scores then show them
                 score_str = f"{score['username']} ({score['winner']}) - {score['final_score']}"
                 score_text = score_font.render(score_str, True, (255, 255, 255))
                 score_rect = score_text.get_rect(center=(self.screen.WIDTH // 2, start_y + idx * offset))

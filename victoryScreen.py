@@ -2,15 +2,13 @@ import pygame
 from screen import Screen
 import database
 
-def show_victory_screen(winner, final_score):
+def show_victory_screen(winner, final_score):# Creating a victory screen in which the user can save his name and score
     pygame.font.init()
     screen = Screen()
     window = pygame.display.set_mode((screen.WIDTH, screen.HEIGHT))
     running = True
-
     input_box = pygame.Rect(screen.WIDTH // 2 - 70, screen.HEIGHT // 2, 140, 32)
     save_button = pygame.Rect(screen.WIDTH // 2 - 40, screen.HEIGHT // 2 + 50, 80, 40)
-
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
@@ -19,28 +17,30 @@ def show_victory_screen(winner, final_score):
     font = pygame.font.Font(None, 32)
 
     while running:
+        window.fill((0, 0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return 'quit'
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if input_box.collidepoint(event.pos):
+                if input_box.collidepoint(event.pos):# Clicking on input box to activate it
                     active = not active
-                elif save_button.collidepoint(event.pos):
-                    print("Save button clicked.")
-                    print(f"Winner: {winner}, Score: {final_score}, Username: {text}")
+                elif save_button.collidepoint(event.pos):# Clicking on "save" to save name and score to database and also go back to the menu (game over state)
+                    # print("Save button clicked.")
+                    # print(f"Winner: {winner}, Score: {final_score}, Username: {text}")
                     database.add_score(winner, text, final_score)
                     running = False
                     return 'GAME_OVER'
                 color = color_active if active else color_inactive
                 
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:# Letting the user to type their name
                 if active:
                     if event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
-
+        
+        # Drawing on screen
         txt_surface = font.render(text, True, color)
         window.blit(txt_surface, (input_box.x+5, input_box.y+5))
         pygame.draw.rect(window, color, input_box, 2)
