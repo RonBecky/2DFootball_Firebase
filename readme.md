@@ -1,6 +1,6 @@
 # 2D Football
 
-2D Football is a simple two-player football simulation game built with Pygame. It features basic player movements, ball control, shooting, and scoring.
+2D Football is a simple two-player football simulation game built with Pygame and Firebase. It features basic player movements, ball control, shooting, and scoring.
 
 ## How to Play
 
@@ -31,7 +31,7 @@
 
 1. create env folder using `py -m virtualenv env` and activate by using `env\Scripts\activate`.
 2. Clone the repository.
-3. Install the requirements using `pip install -r .\requirements.txt`.
+3. Go to 2DFootball_Firebase file using `cd ./2DFootball_Firebase` and install the requirements using `pip install -r .\requirements.txt`.
 4. Run the script `py ./main.py`.
 
 ## Gameplay
